@@ -1,24 +1,21 @@
-## Put comments here that give an overall description of what your
-## functions do
-
-## Write a short comment describing this function
+## Function name: makeCacheMatrix
+## 
+## Argument: x is an object type Matrix
+## 
+## Purpose: function that defines & returns a list of four functions
+##  Function to get the matrix from cached memory object
+##  Function to set the matrix into memory cache
+##  Functions to set (setInverse) and get (getInverse) the cached matrix inverse
 
 makeCacheMatrix <- function(x = matrix()) {
 
-## Function name: makeMatrix
-## 
-## Argument: object type of Matrix
-## 
-## Purpose: function that defines & returns a list of four functions
-##  Function to get the matrix from Cached memory object
-##  Function to set the matrix into memory cache
-##  Functions to set (setInverse) and get (getInverse) the cached Matrix Inverse
+
 
 	## initialize the matrix
  	m <- NULL
   
   	## Set the value of the global cached object - the matrix to be inversed
-  	## set the value of the global Cached Matrix Inverse object to null
+  	## Initialize the global cached matrix inverse object to null
   
   	set <- function(y) {
    	 	x <<- y
@@ -42,8 +39,32 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 
-## Write a short comment describing this function
+## Function checks to see if the Matrix Inverse is available in cache
+## or else the function computes and sets the inversed matrix into cached object in memory.
+##
+## Function Argument: List of four functions returned by the makeCacheMatrix function above
+##
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+
+ 	## NOTE: Changed the logic from the sample code to reflect a proper if and else structure and check for null object
+	## Get the cached Matrix object by calling getInverse
+  	## Check if the object has been cached - object is null or not
+  	## If the object is null (not in the cache), compute the matrix inverse using solve function and 
+  	## store it in global cache by calling setInverse
+
+  	m <- x$getInverse()
+  	if(is.null(m)) {
+      		data <- x$get()
+      		m <- solve(data, ...)
+      		x$setInverse(m)   
+  	} else {
+    		## if the cached inversed matrix is not null, print out the message that the object is being returned from the cache    ##
+      		message("getting cached data")
+    
+  	}
+
+  	## return the computed & cached matrix inverse of the matrix
+  	return (m)
+        
 }
